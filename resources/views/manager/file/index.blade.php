@@ -65,13 +65,13 @@
                                                 {!! Form::submit('Show', array('class' => 'btn btn-xs btn-primary')) !!}
                                                 {!! Form::close() !!}
 
-                                                {!! Form::open(array(
-                                                    'style' => 'display: inline-block;',
-                                                    'method' => 'POST',
-                                                    'route' => 'manager.file.rename')) !!}
-                                                {!! Form::hidden('id', $file->id) !!}
-                                                {!! Form::submit('Show', array('class' => 'btn btn-xs btn-secondary')) !!}
-                                                {!! Form::close() !!}
+                                                {{--{!! Form::open(array(--}}
+                                                    {{--'style' => 'display: inline-block;',--}}
+                                                    {{--'method' => 'POST',--}}
+                                                    {{--'route' => 'manager.file.rename')) !!}--}}
+                                                {{--{!! Form::hidden('id', $file->id) !!}--}}
+                                                {{--{!! Form::submit('Show', array('class' => 'btn btn-xs btn-secondary')) !!}--}}
+                                                {{--{!! Form::close() !!}--}}
                                                 {{--<a class="btn btn-secondary btn-xs" href="{{'https://pbx.smart-php.design/storage/app/'.$file->path}}">Download</a>--}}
                                             </td>
                                         </tr>

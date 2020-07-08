@@ -8,12 +8,17 @@ use Illuminate\Support\Facades\Storage;
 use Auth;
 use App\Directory;
 use App\File;
+use App\Traits\FileOperations;
+use Illuminate\Support\Facades\File as FileSupport;
+use App\Traits\CheckPermission;
 
 class FileController extends Controller
 {
+    use FileOperations, CheckPermission;
+
     public function index()
     {
-        $files = File::where('user_id', Auth::user()->id)->get(); //not empty todo
+        $files = $this->all();
         return view('manager.file.index', compact('files'));
     }
 
@@ -29,7 +34,7 @@ class FileController extends Controller
             'filenames' => 'required'
         ]);
 
-        $directory = Directory::findOrFail($request->directory);
+        $directory = Directory::find($request->directory);
 
         if($request->hasfile('filenames') && $directory->user_id === $request->user()->id)
         {
@@ -43,7 +48,6 @@ class FileController extends Controller
                     $file->path = $path;
                     $file->permission = 0;
                     $file->save();
-
                     Session::flash('status', 'Files was uploaded!');
                 }
                 else
@@ -57,9 +61,9 @@ class FileController extends Controller
 
     public function delete(Request $request)
     {
-        $file = File::findOrFail($request->id);
+        $file = File::find($request->id);
 
-        if($file->user_id === Auth::user()->id) { //todo subdir
+        if($this->checkAuthUserPermission($file->user_id, $file->permission)) { //todo subdir
             if(Storage::delete($file->path)){
                 File::destroy($request->id);
                 Session::flash('status', 'File has been deleted!');
@@ -75,13 +79,19 @@ class FileController extends Controller
     public function download(Request $request)
     {
         $file = File::findOrFail($request->id);
-        return response()->download(storage_path('app/').$file->path);
+        $response = $this->checkAuthUserPermission($file->user_id, $file->permission) ?
+            response()->download(storage_path('app/').$file->path) :
+                redirect()->back()->withErrors('You do not have permissions!');
+        return $response;
     }
 
     public function show(Request $request)
     {
         $file = File::findOrFail($request->id);
-        return response()->file(storage_path('app/').$file->path);
+        if (in_array(FileSupport::extension($file->name),["png", "svg", "webp", "jpg", "jpeg", "ico", "pdf"]))
+            return response()->file(storage_path('app/').$file->path);
+
+         return redirect()->back()->withErrors('You can not see the file!');
     }
 
     public function rename(Request $request)
