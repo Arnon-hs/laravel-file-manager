@@ -16,7 +16,7 @@ class CreateDirectoriesTable extends Migration
         Schema::create('directories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('permission');
+            $table->string('path');
             $table->integer('user_id');
             $table->timestamps();
         });

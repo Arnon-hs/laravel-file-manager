@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'manager', 'as' => 'manager.
         Route::post('/download', 'FileController@download')->name('download');
         Route::post('/show', 'FileController@show')->name('show');
         Route::post('/rename', 'FileController@rename')->name('rename');
+        Route::post('/public', 'FileController@publicLink')->name('publicLink');
         Route::delete('/delete', 'FileController@delete')->name('delete');
     });
 });

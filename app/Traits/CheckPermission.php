@@ -9,12 +9,11 @@ trait CheckPermission
 
     /**
      * @param int $user_id
-     * @param int $permissions
      * @return bool
      */
-    private function checkAuthUserPermission(int $user_id, int $permissions = 0) : bool
+    private function checkAuthUserPermission(int $user_id) : bool
     {
-        if($user_id === Auth::user()->id || $permissions == 1)
+        if($user_id === Auth::user()->id)
             return true;
         else
             return false;

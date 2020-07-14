@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Directory extends Model
 {
     protected $table = 'directories';
-    protected $fillable = ['name','permission', 'user_id'];
+    protected $fillable = ['name', 'user_id', 'path'];
 
     public function user()
     {

@@ -17,9 +17,9 @@ class CreateFilesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('path');
+            $table->string('public_link');
             $table->integer('folder_id');
             $table->integer('user_id');
-            $table->integer('permission');
             $table->timestamps();
         });
     }

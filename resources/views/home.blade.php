@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{ __('You are logged in. You can use cloud storage!') }}
                 </div>
             </div>
         </div>
